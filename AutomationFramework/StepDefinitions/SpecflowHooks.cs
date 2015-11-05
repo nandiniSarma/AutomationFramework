@@ -18,20 +18,13 @@ namespace AutomationFramework
         public static void AfterScenario()
         {
             var testErrorStatus = ScenarioContext.Current.TestError;
-            if(testErrorStatus != null)
+            if (testErrorStatus != null)
             {
                 Screenshot screenshot = ((ITakesScreenshot)Browser.Current).GetScreenshot();
                 var path = System.IO.Path.GetFullPath(@"../ScreenCapture/") + ScenarioContext.Current.ScenarioInfo.Title + "+" + DateTime.Now.ToString("dd-MM-yyyy-- h-mm-ss") + ".jpg";
                 screenshot.SaveAsFile(path, System.Drawing.Imaging.ImageFormat.Jpeg);
                 Console.WriteLine("Failure Screenshot saved at location {0}", new Uri(path));
             }
-        }
-
-        [AfterFeature]
-        public static void AfterFeature()
-        {
-            var cmdText = "taskkill /im chromedriver.exe /F";
-            System.Diagnostics.Process.Start("cmd.exe", cmdText);
         }
     }
 }
